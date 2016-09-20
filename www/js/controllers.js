@@ -1,8 +1,15 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('LoginCtrl', function($scope, $state) {
+  $scope.usuarioLog={};
 
-.controller('MotionCtrl', function($scope, $cordovaDeviceMotion, $cordovaNativeAudio, $timeout) {
+  $scope.Guardar=function(){
+    var dato=JSON.stringify($scope.usuarioLog);
+    $state.go("tab.motion",{nombre:dato});
+  }
+})
+
+.controller('MotionCtrl', function($scope, $stateParams, $cordovaDeviceMotion, $cordovaNativeAudio, $timeout) {
 
   $scope.x = 0;
   $scope.y = 0;
@@ -89,12 +96,10 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AutorCtrl', function($scope) {
+  $scope.autor={};
+  $scope.autor.nombre="Maria Eugenia Pereyra";
+  $scope.autor.foto="img/autor.jpg";
+  $scope.autor.email="meugeniape@gmail.com";
+  $scope.autor.github="https://github.com/EugeniaPereyra";
 });

@@ -1,0 +1,16 @@
+<ion-view view-title="Login" class="login" >
+  <ion-content class="padding">
+  <div style="margin-top: 10%;">
+    <h2>Ingresa tu nombre</h2>
+
+    <form name="login">
+      <div class="list">
+        <label class="item item-input">
+          <input name="nombre" type="text" placeholder="Nombre" ng-model="usuarioLog.nombreLog">
+        </label>
+        <button class="button button-block button-assertive" ng-click="Guardar()" ng-show="usuarioLog.nombreLog"><p style="color:black"><strong>Jugar!</strong></p></button>
+      </div>
+    </form>
+  </div>
+  </ion-content>
+</ion-view>
