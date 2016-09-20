@@ -1,0 +1,24 @@
+<ion-view view-title="Motion">
+  <ion-content>
+
+  	<div class="item range">
+		<p><strong>Vel. </strong></p>
+		<p>100%</p>
+		<input type="range" min="100" max="400" value="100" step="1" ng-model="velocidad" name="velocidad">
+		<p>400%</p>
+	</div>
+
+  	<div>
+  		<div style="display: block;padding: 25px;">
+  			<button class="button" ng-click="Reiniciar();">Reiniciar</button>
+  		</div>
+  		
+      <div style="display:block; width: 100%; height: 100%;">
+  			<div id="divCaja" class="caja" style="width: {{ caja.width }}px; height: {{ caja.height }}px;">
+  				<img src="img/mosca-feliz-2.png" alt="Mosca" class="{{ flipClass }}" style="margin-top: {{ y }}px; margin-left: {{ x }}px;" >
+  			</div>
+  		</div>
+  		
+  	</div>
+  </ion-content>
+</ion-view>
