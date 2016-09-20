@@ -1,1 +1,18 @@
 /* Empty. Add your own CSS if you like */
+.caja {
+	margin: auto;
+	border-style: solid;
+	border-width: thin;
+	border-color: black;
+        background-image: url("../img/fondo.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+}
+
+.flipX {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
