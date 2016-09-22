@@ -21,17 +21,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       StatusBar.styleDefault();
     }
 
-    if( window.plugins && window.plugins.NativeAudio ) {
-      window.plugins.NativeAudio.preloadComplex('mosca', 'audio/mosca.mp3', 1, 1, function(mensaje){
-        }, function(mensaje){
-            console.log( 'Error: ' + mensaje );
-        });
-    }
-
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -80,5 +73,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/login');
+
+  $ionicConfigProvider.tabs.position('bottom');
 
 });

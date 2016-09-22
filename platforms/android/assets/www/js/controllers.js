@@ -1,21 +1,49 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('LoginCtrl', function($scope, $state) {
+  $scope.usuarioLog={};
 
-.controller('MotionCtrl', function($scope, $cordovaDeviceMotion, $cordovaNativeAudio, $timeout) {
+  $scope.Guardar=function(){
+    var dato=JSON.stringify($scope.usuarioLog);
+    $state.go("tab.motion",{nombre:dato});
+  }
+})
 
-  $scope.x = 0;
-  $scope.y = 0;
+.controller('MotionCtrl', function($scope, $stateParams, $cordovaDeviceMotion, $cordovaMedia, $window) {
+
+  $scope.MarginLeft = 0;
+  $scope.MarginTop = 0;
   $scope.z = 0;
   $scope.timeStamp;
   $scope.velocidad = 100; //porcentaje de velocidad
-  //$scope.caja = { width: 640, height: 360 };
-  $scope.caja = { width: screen.availWidth, height: screen.availHeight  };
   $scope.mosca = { width: 50, height: 39 };
   $scope.flipClass = "";
 
+  $scope.caja = { width: 0, height: 0 };
+
+  //Calcula el width y height de la pantalla
+  $scope.calcularPantalla = function() {
+    $scope.caja.width = $window.innerWidth;
+    $scope.caja.height = $window.innerHeight- 49;
+  }
+  
+  $scope.calcularPantalla();
+
+  //Asigna la funcion como manejador para el evento que se lanza al rotar la pantalla
+  angular.element($window).bind('resize', function(){
+    $scope.$apply(function() {
+      $scope.calcularPantalla();    
+    })       
+  });
+  
+  //var src = 'audio/mosca.mp3';
+  //var media = $cordovaMedia.newMedia(src);
+
+  //media.play();
+  $scope.sonando = false;
+
   // watch Acceleration
-  var options = { frequency: 100 };
+  var options = { frequency: 200 };
   document.addEventListener("deviceready", function () {
 
     var watch = $cordovaDeviceMotion.watchAcceleration(options);
@@ -33,68 +61,79 @@ angular.module('starter.controllers', [])
 
   function ActualizarPosicion(result){
     // redondea x e y para que sea menos preciso al estar el telefono horizontal
-    var x = Math.round(result.x); //variable del sensor
-    var y = Math.round(result.y); //variable del sensor
+    var SensorX = Math.round(result.x); //variable del sensor
+    var SensorY = Math.round(result.y); //variable del sensor
     var vel = ($scope.velocidad / 100) * 2; //se multiplica por 2 para obtener un poco mas de velocidad
+    
+      $scope.sonar = false;
 
-    var sonando=-1;
-    if($scope.x!=0||$scope.y!=0)
+    if (SensorX > 0 && $scope.MarginLeft > 0) 
     {
-
-          if(sonando==-1)
-          {
-            $cordovaNativeAudio.play('mosca');
-            sonando=1;
-          }
-    }
-
-    if($scope.x==0&&$scope.y==0)
-    {
-      if(sonando==1)
-      {
-        $cordovaNativeAudio.stop('mosca');
-        sonando=-1;
-      }
-    }
-
-    if (x > 0 && $scope.x > 0) 
-    {
-      $scope.x -= vel;
+      // Se mueve a la izquierda
+      $scope.MarginLeft -= vel;
       if ($scope.flipClass == "flipX")
         $scope.flipClass = "";
+      $scope.sonar = true;
     }
-    if ((x < 0) && (($scope.x + $scope.mosca.width) < $scope.caja.width))
+    
+    if ((SensorX < 0) && (($scope.MarginLeft + $scope.mosca.width) < $scope.caja.width))
     {
-      $scope.x += vel;
+      // Se mueve a la derecha
+      $scope.MarginLeft += vel;
       if ($scope.flipClass != "flipX")
         $scope.flipClass = "flipX";
+      $scope.sonar = true;
     }
-    if ((y > 0) && (($scope.y + $scope.mosca.height) < $scope.caja.height)) 
-      $scope.y += vel;
-    if (y < 0 && $scope.y > 0)
-      $scope.y -= vel;
+    
+    if ((SensorY > 0) && (($scope.MarginTop + $scope.mosca.height) < $scope.caja.height)) 
+    {
+      // Se mueve abajo
+      $scope.MarginTop += vel;
+      $scope.sonar = true;
+    }
+    
+    if (SensorY < 0 && $scope.MarginTop > 0)
+    {
+      // Se mueve arriba
+      $scope.MarginTop -= vel;
+      $scope.sonar = true;
+    }
 
     $scope.z = result.z;
     $scope.timeStamp = result.timestamp;
 
+
+    if ($scope.sonar && !$scope.sonando)
+    {
+      //alert('pone play');
+      //media.play();
+      $scope.sonando = true; 
+    }
+    
+    if (!$scope.sonar) 
+    {
+      //alert('pone stop');
+      //media.pause();
+      $scope.sonando = false;
+    }
   };
 
   $scope.Reiniciar = function(){
-    $scope.x = 0;
-    $scope.y = 0;
+    $scope.MarginLeft = 0;
+    $scope.MarginTop = 0;
     $scope.z = 0;
     $scope.velocidad = 100;
+    $scope.sonar = false;
+    $scope.sonando = false;
   }
   
 })
 
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AutorCtrl', function($scope) {
+  $scope.autor={};
+  $scope.autor.nombre="Maria Eugenia Pereyra";
+  $scope.autor.foto="img/autor.jpg";
+  $scope.autor.email="meugeniape@gmail.com";
+  $scope.autor.github="https://github.com/EugeniaPereyra";
 });
