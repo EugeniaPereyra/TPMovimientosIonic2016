@@ -22,17 +22,17 @@ angular.module('starter.controllers', [])
   $scope.Z = 0;
   $scope.flipClass = "";
 
-  $scope.izq=false;
-  $scope.der=false;
-  $scope.arr=false;
-  $scope.aba=false;
-  $scope.acos=false;
-  $scope.para=false;
+  $scope.izquierda=false;
+  $scope.derecha=false;
+  $scope.arriba=false;
+  $scope.abajo=false;
+  $scope.acostado=false;
+  $scope.parado=false;
 
   $scope.sensibilidad=1;
   
   // watch Acceleration
-  var options = { frequency: 200 };
+  var options = { frequency: 100 };
   document.addEventListener("deviceready", function () {
 
     $cordovaFile.createFile(cordova.file.externalRootDirectory, "motion.txt",true) // cordova.file.dataDirectory //cordova.file.externalRootDirectory
@@ -68,16 +68,16 @@ angular.module('starter.controllers', [])
     if (SensorX > 0 && SensorX>$scope.sensibilidad && SensorY == 0) 
     {
       // Rota a la izquierda
-      if(!$scope.izq)
+      if(!$scope.izquierda)
       {
         $scope.flipClass = "rotate270";
         Reproducir('izquierda');
-        $scope.izq=true;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=false;
-        $scope.para=false;
+        $scope.izquierda=true;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=false;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('izquierda');
@@ -88,16 +88,16 @@ angular.module('starter.controllers', [])
     if ( SensorX < 0 && SensorX < $scope.sensibilidad * -1 && SensorY == 0)
     {
       // Rota a la derecha
-      if(!$scope.der)
+      if(!$scope.derecha)
       {
         $scope.flipClass = "rotate90";
         Reproducir('derecha');
-        $scope.izq=false;
-        $scope.der=true;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=false;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=true;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=false;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('derecha');
@@ -108,16 +108,16 @@ angular.module('starter.controllers', [])
     if (SensorY > 0 && SensorY > $scope.sensibilidad && SensorZ != 0 && SensorX == 0) 
     {
       // Rota abajo
-      if(!$scope.aba)
+      if(!$scope.abajo)
       {
         $scope.flipClass = "flipY";
         Reproducir('abajo');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=true;
-        $scope.acos=false;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=true;
+        $scope.acostado=false;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('abajo');
@@ -128,16 +128,16 @@ angular.module('starter.controllers', [])
     if (SensorY < 0 && SensorY < $scope.sensibilidad * -1 && SensorX == 0 )
     {
       // Rota arriba
-      if(!$scope.arr)
+      if(!$scope.arriba)
       {
         $scope.flipClass = "";
         Reproducir('arriba');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=true;
-        $scope.aba=false;
-        $scope.acos=false;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=true;
+        $scope.abajo=false;
+        $scope.acostado=false;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('arriba');
@@ -148,15 +148,15 @@ angular.module('starter.controllers', [])
     if (SensorZ == 10 && SensorX == 0 && SensorY == 0)
     {
       //mira hacia arriba
-      if(!$scope.acos)
+      if(!$scope.acostado)
       {
         Reproducir('acostado');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=true;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=true;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('acostado');
@@ -166,15 +166,15 @@ angular.module('starter.controllers', [])
     if (SensorZ == -10 && SensorX == 0 && SensorY == 0)
     {
       //mira hacia abajo
-      if(!$scope.acos)
+      if(!$scope.acostado)
       {
         Reproducir('acostado');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=true;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=true;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('acostado');
@@ -184,15 +184,15 @@ angular.module('starter.controllers', [])
     if (SensorZ == 0)
     {
       //parado
-      if(!$scope.para)
+      if(!$scope.parado)
       {
         Reproducir('parado');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=false;
-        $scope.para=true;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=false;
+        $scope.parado=true;
         if($scope.movimientos)
         {
           $scope.movimientos.push('parado');
