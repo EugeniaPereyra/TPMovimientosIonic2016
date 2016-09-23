@@ -6,11 +6,12 @@ angular.module('starter.controllers', [])
   $scope.Guardar=function(){
     var dato=JSON.stringify($scope.usuarioLog);
     $state.go("tab.motion",{nombre:dato});
+    $scope.usuarioLog.nombreLog="";
   }
 })
 
 .controller('MotionCtrl', function($scope, $stateParams, $cordovaDeviceMotion, $cordovaNativeAudio, $timeout, $cordovaFile, $ionicPopup ) {
-  $scope.debug = true; // false para ocultar coordenadas
+  $scope.debug = false; // false para ocultar coordenadas
 
   $scope.usuario={};
   var nombre=JSON.parse($stateParams.nombre);
@@ -22,33 +23,35 @@ angular.module('starter.controllers', [])
   $scope.Z = 0;
   $scope.flipClass = "";
 
-  $scope.izq=false;
-  $scope.der=false;
-  $scope.arr=false;
-  $scope.aba=false;
-  $scope.acos=false;
-  $scope.para=false;
+  $scope.izquierda=false;
+  $scope.derecha=false;
+  $scope.arriba=false;
+  $scope.abajo=false;
+  $scope.acostado=false;
+  $scope.parado=false;
 
   $scope.sensibilidad=1;
   
   // watch Acceleration
-  var options = { frequency: 200 };
+  var options = { frequency: 100 };
   document.addEventListener("deviceready", function () {
 
     $cordovaFile.createFile(cordova.file.externalRootDirectory, "motion.txt",true) // cordova.file.dataDirectory //cordova.file.externalRootDirectory
         .then(function (success) {
           // success
+          console.log("archivo creado");
         }, function (error) {
           // error
+          console.log(error);
         });
 
-    var watch = $cordovaDeviceMotion.watchAcceleration(options);
+    $scope.watch = $cordovaDeviceMotion.watchAcceleration(options);
     
-    watch.then(
+    $scope.watch.then(
       null,
       function(error) {
         // An error occurred
-        alert(error);
+        console.log(error);
       },
       function(result) {
         ActualizarRotacion(result);  
@@ -68,16 +71,16 @@ angular.module('starter.controllers', [])
     if (SensorX > 0 && SensorX>$scope.sensibilidad && SensorY == 0) 
     {
       // Rota a la izquierda
-      if(!$scope.izq)
+      if(!$scope.izquierda)
       {
         $scope.flipClass = "rotate270";
         Reproducir('izquierda');
-        $scope.izq=true;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=false;
-        $scope.para=false;
+        $scope.izquierda=true;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=false;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('izquierda');
@@ -88,16 +91,16 @@ angular.module('starter.controllers', [])
     if ( SensorX < 0 && SensorX < $scope.sensibilidad * -1 && SensorY == 0)
     {
       // Rota a la derecha
-      if(!$scope.der)
+      if(!$scope.derecha)
       {
         $scope.flipClass = "rotate90";
         Reproducir('derecha');
-        $scope.izq=false;
-        $scope.der=true;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=false;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=true;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=false;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('derecha');
@@ -108,16 +111,16 @@ angular.module('starter.controllers', [])
     if (SensorY > 0 && SensorY > $scope.sensibilidad && SensorZ != 0 && SensorX == 0) 
     {
       // Rota abajo
-      if(!$scope.aba)
+      if(!$scope.abajo)
       {
         $scope.flipClass = "flipY";
         Reproducir('abajo');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=true;
-        $scope.acos=false;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=true;
+        $scope.acostado=false;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('abajo');
@@ -128,16 +131,16 @@ angular.module('starter.controllers', [])
     if (SensorY < 0 && SensorY < $scope.sensibilidad * -1 && SensorX == 0 )
     {
       // Rota arriba
-      if(!$scope.arr)
+      if(!$scope.arriba)
       {
         $scope.flipClass = "";
         Reproducir('arriba');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=true;
-        $scope.aba=false;
-        $scope.acos=false;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=true;
+        $scope.abajo=false;
+        $scope.acostado=false;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('arriba');
@@ -148,15 +151,15 @@ angular.module('starter.controllers', [])
     if (SensorZ == 10 && SensorX == 0 && SensorY == 0)
     {
       //mira hacia arriba
-      if(!$scope.acos)
+      if(!$scope.acostado)
       {
         Reproducir('acostado');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=true;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=true;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('acostado');
@@ -166,15 +169,15 @@ angular.module('starter.controllers', [])
     if (SensorZ == -10 && SensorX == 0 && SensorY == 0)
     {
       //mira hacia abajo
-      if(!$scope.acos)
+      if(!$scope.acostado)
       {
         Reproducir('acostado');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=true;
-        $scope.para=false;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=true;
+        $scope.parado=false;
         if($scope.movimientos)
         {
           $scope.movimientos.push('acostado');
@@ -184,15 +187,15 @@ angular.module('starter.controllers', [])
     if (SensorZ == 0)
     {
       //parado
-      if(!$scope.para)
+      if(!$scope.parado)
       {
         Reproducir('parado');
-        $scope.izq=false;
-        $scope.der=false;
-        $scope.arr=false;
-        $scope.aba=false;
-        $scope.acos=false;
-        $scope.para=true;
+        $scope.izquierda=false;
+        $scope.derecha=false;
+        $scope.arriba=false;
+        $scope.abajo=false;
+        $scope.acostado=false;
+        $scope.parado=true;
         if($scope.movimientos)
         {
           $scope.movimientos.push('parado');
@@ -201,7 +204,7 @@ angular.module('starter.controllers', [])
     }
   }
 
-  function Reproducir(sonido){
+  function Reproducir(sonido){ 
       try
       {
         $cordovaNativeAudio.play(sonido);
@@ -222,9 +225,11 @@ angular.module('starter.controllers', [])
                       $scope.grabados=dato;
                     }, function (error) {
                       // error
+                      console.log(error);
                     });
           }, function (error) {
             // error
+            console.log(error);
           });
   }
   catch(e)
@@ -260,6 +265,7 @@ angular.module('starter.controllers', [])
                   console.log("archivo guardado");
                 }, function (error) {
                   // error
+                  console.log(error);
                 });
           }
           catch(e)
@@ -275,9 +281,9 @@ angular.module('starter.controllers', [])
 
   $scope.Escuchar=function(){
     var retraso=0;
+    $scope.watch.clearWatch();
 
-        angular.forEach($scope.copia, function(value, index) {
-
+    angular.forEach($scope.copia, function(value, index) {
           try
           {
             $timeout(function(){$cordovaNativeAudio.play(value);},retraso);
@@ -287,8 +293,10 @@ angular.module('starter.controllers', [])
             console.log("La vibracion y el sonido, solo funcionan en celulares");
           }
 
-            retraso+=1500;
+            retraso+=1000;
         });  
+    
+    $scope.watch = $cordovaDeviceMotion.watchAcceleration(options);
   }
 
 })
@@ -304,6 +312,7 @@ angular.module('starter.controllers', [])
                 $scope.archivo=dato;
               }, function (error) {
                 // error
+                console.log(error);
               });
     }, false);
 })

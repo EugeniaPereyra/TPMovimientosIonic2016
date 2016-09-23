@@ -6,11 +6,12 @@ angular.module('starter.controllers', [])
   $scope.Guardar=function(){
     var dato=JSON.stringify($scope.usuarioLog);
     $state.go("tab.motion",{nombre:dato});
+    $scope.usuarioLog.nombreLog="";
   }
 })
 
 .controller('MotionCtrl', function($scope, $stateParams, $cordovaDeviceMotion, $cordovaNativeAudio, $timeout, $cordovaFile, $ionicPopup ) {
-  $scope.debug = true; // false para ocultar coordenadas
+  $scope.debug = false; // false para ocultar coordenadas
 
   $scope.usuario={};
   var nombre=JSON.parse($stateParams.nombre);
@@ -38,17 +39,19 @@ angular.module('starter.controllers', [])
     $cordovaFile.createFile(cordova.file.externalRootDirectory, "motion.txt",true) // cordova.file.dataDirectory //cordova.file.externalRootDirectory
         .then(function (success) {
           // success
+          console.log("archivo creado");
         }, function (error) {
           // error
+          console.log(error);
         });
 
-    var watch = $cordovaDeviceMotion.watchAcceleration(options);
+    $scope.watch = $cordovaDeviceMotion.watchAcceleration(options);
     
-    watch.then(
+    $scope.watch.then(
       null,
       function(error) {
         // An error occurred
-        alert(error);
+        console.log(error);
       },
       function(result) {
         ActualizarRotacion(result);  
@@ -201,7 +204,7 @@ angular.module('starter.controllers', [])
     }
   }
 
-  function Reproducir(sonido){
+  function Reproducir(sonido){ 
       try
       {
         $cordovaNativeAudio.play(sonido);
@@ -222,9 +225,11 @@ angular.module('starter.controllers', [])
                       $scope.grabados=dato;
                     }, function (error) {
                       // error
+                      console.log(error);
                     });
           }, function (error) {
             // error
+            console.log(error);
           });
   }
   catch(e)
@@ -260,6 +265,7 @@ angular.module('starter.controllers', [])
                   console.log("archivo guardado");
                 }, function (error) {
                   // error
+                  console.log(error);
                 });
           }
           catch(e)
@@ -276,8 +282,7 @@ angular.module('starter.controllers', [])
   $scope.Escuchar=function(){
     var retraso=0;
 
-        angular.forEach($scope.copia, function(value, index) {
-
+    angular.forEach($scope.copia, function(value, index) {
           try
           {
             $timeout(function(){$cordovaNativeAudio.play(value);},retraso);
@@ -287,10 +292,9 @@ angular.module('starter.controllers', [])
             console.log("La vibracion y el sonido, solo funcionan en celulares");
           }
 
-            retraso+=1500;
+            retraso+=1000;
         });  
   }
-
 })
 
 .controller('GrabadoCtrl', function($scope, $cordovaFile) {
@@ -304,6 +308,7 @@ angular.module('starter.controllers', [])
                 $scope.archivo=dato;
               }, function (error) {
                 // error
+                console.log(error);
               });
     }, false);
 })
