@@ -1,13 +1,11 @@
 /* Empty. Add your own CSS if you like */
-.caja {
-	margin: auto;
-	border-style: solid;
-	border-width: thin;
-	border-color: black;
-        background-image: url("../img/fondo.png");
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
+#flecha {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .flipX {
@@ -17,7 +15,30 @@
         -ms-filter: "FlipH";
 }
 
+.rotate90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
 
+.rotate270 {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+.flipY {
+        -webkit-transform: scaleY(-1);
+        transform: scaleY(-1);
+        filter: FlipV;
+        -ms-filter: "FlipV";
+}
+
+/* otros tabs */
 .login {
     background-color: #81F781;
 }
@@ -40,4 +61,103 @@ p{
         color:blue;
         text-align: center;
         font-size: 16px;
+}
+
+.redondo{
+    border-radius: 100%;
+}
+
+.btn-class-left{
+ display: inline-block;
+ border:1px solid #4DB6EB;
+ color: #317596;
+ border-radius: 50px 0px 0px 50px;
+ -webkit-border-radius: 50px 0px 0px 50px;
+ -moz-border-radius: 50px 0px 0px 50px;
+ font-family: Verdana;
+ width: 75px;
+ height: auto;
+ font-size: 16px;
+ padding: 10px 40px;
+ box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ -moz-box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ -webkit-box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ text-shadow: 1px 1px 1px #C1E2FB;
+ background-image: linear-gradient(to top, darkblue, lightblue);
+ background-color: #52C3FB;
+}
+.btn-class-left:hover, .btn-class-left:active{
+ border:1px solid #46D4D9;
+ color: #317596;
+ box-shadow: inset 0px 2px 9px 0 #3989B0;
+ -moz-box-shadow: inset 0px 2px 9px 0 #3989B0;
+ -webkit-box-shadow: inset 0px 2px 9px 0 #3989B0;
+ background-color: #52C3FB;
+}
+
+
+.btn-class-right{
+ display: inline-block;
+ border:1px solid #4DB6EB;
+ color: #317596;
+ border-radius: 0px 50px 50px 0px;
+ -webkit-border-radius: 0px 50px 50px 0px;
+ -moz-border-radius: 0px 50px 50px 0px;
+ font-family: Verdana;
+ width: 75px;
+ height: auto;
+ font-size: 16px;
+ padding: 10px 40px;
+ box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ -moz-box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ -webkit-box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ text-shadow: 1px 1px 1px #C1E2FB;
+ background-image: linear-gradient(to top, darkblue, lightblue);
+ background-color: #52C3FB;
+}
+.btn-class-right:hover, .btn-class-right:active{
+ border:1px solid #46D4D9;
+ color: #317596;
+ box-shadow: inset 0px 2px 9px 0 #3989B0;
+ -moz-box-shadow: inset 0px 2px 9px 0 #3989B0;
+ -webkit-box-shadow: inset 0px 2px 9px 0 #3989B0;
+ background-color: #52C3FB;
+}
+
+.btn-class-center{
+ display: inline-block;
+ border:1px solid #4DB6EB;
+ color: #317596;
+ border-radius: 0px 0px 0px 0px;
+ -webkit-border-radius: 0px 0px 0px 0px;
+ -moz-border-radius: 0px 0px 0px 0px;
+ font-family: Verdana;
+ width: 75px;
+ height: auto;
+ font-size: 16px;
+ padding: 10px 40px;
+ box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ -moz-box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ -webkit-box-shadow: inset 0px 0px 1px 0 #FCFCFC;
+ text-shadow: 1px 1px 1px #C1E2FB;
+ background-image: linear-gradient(to top, darkblue, lightblue);
+ background-color: #52C3FB;
+}
+.btn-class-center:hover, .btn-class-center:active{
+ border:1px solid #46D4D9;
+ color: #317596;
+ box-shadow: inset 0px 2px 9px 0 #3989B0;
+ -moz-box-shadow: inset 0px 2px 9px 0 #3989B0;
+ -webkit-box-shadow: inset 0px 2px 9px 0 #3989B0;
+ background-color: #52C3FB;
+}
+
+
+.salida{
+
+}
+.salida .popup-title {
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
 }
