@@ -44,7 +44,18 @@
 }
 
 .autor{
-        background-color: #F5A9D0;
+    background-color: #F5A9D0;
+}
+
+.motion{
+    background:url("../img/galaga.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.fondo-grabado{
+    background-color:lightgrey;
 }
 
 
@@ -61,6 +72,11 @@ p{
         color:blue;
         text-align: center;
         font-size: 16px;
+}
+
+ion-icon{
+    color:black;
+    font-size: 20px;
 }
 
 .redondo{
