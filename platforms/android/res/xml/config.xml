@@ -33,7 +33,7 @@
     <feature name="Media">
         <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
     </feature>
-    <name>Mosca Motion</name>
+    <name>Flecha Motion</name>
     <description>
         An Ionic Framework and Cordova project.
     </description>

@@ -1,12 +1,28 @@
 <ion-view view-title="Motion">
   <ion-content scroll="false">
 
-      <div style="display:block; width: 100%; height: 100%;">
-        <div id="divCaja" class="caja" style="width: {{ caja.width }}px; height: {{ caja.height }}px;">
-          <img src="img/mosca-feliz-2.png" alt="Mosca" class="{{ flipClass }}" style="margin-top: {{ MarginTop }}px; margin-left: {{ MarginLeft }}px;" >
+      <div style="display:block; width: 100%; height: 100%; position: relative;">
+        <div ng-show="debug">
+          <label>X: {{ X }}</label>
+          <label>Y: {{ Y }}</label></br>
+          <label>Z: {{ Z }}</label>
+        </div>
+        <img id="flecha" src="img/Flecha.png" class="{{ flipClass }}" >
+  		</div>
+
+      <div class="bar bar-footer bar-clear" style="height: auto;">
+        <div class="row" style="text-align: center;" >
+          <div class="col">
+            <button id="grabar" class="button ion-record btn-class-left" ng-click="Grabar()"></button>
+          </div>
+          <div class="col">
+            <button id="stop" class="button ion-stop btn-class-center" ng-click="Parar()"></button>
+          </div>
+          <div class="col">
+            <button id="escuchar" class="button ion-play btn-class-right" ng-click="Escuchar()"></button>
+          </div>
         </div>
       </div>
-      
-    </div>
+  		
   </ion-content>
 </ion-view>

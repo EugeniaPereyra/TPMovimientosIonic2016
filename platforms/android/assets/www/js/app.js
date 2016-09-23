@@ -21,6 +21,38 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       StatusBar.styleDefault();
     }
 
+    if(window.plugins && window.plugins.NativeAudio){
+      window.plugins.NativeAudio.preloadSimple('abajo', 'audio/abajo.mp3', function(msg){
+      }, function(msg){
+        console.log("Error: "+msg);
+      });
+
+      window.plugins.NativeAudio.preloadSimple('acostado', 'audio/acostado.mp3', function(msg){
+      }, function(msg){
+        console.log("Error: "+msg);
+      });
+
+      window.plugins.NativeAudio.preloadSimple('arriba', 'audio/arriba.mp3', function(msg){
+      }, function(msg){
+        console.log("Error: "+msg);
+      });
+
+      window.plugins.NativeAudio.preloadSimple('derecha', 'audio/derecha.mp3', function(msg){
+      }, function(msg){
+        console.log("Error: "+msg);
+      });
+
+      window.plugins.NativeAudio.preloadSimple('izquierda', 'audio/izquierda.mp3', function(msg){
+      }, function(msg){
+        console.log("Error: "+msg);
+      });
+
+      window.plugins.NativeAudio.preloadSimple('parado', 'audio/parado.mp3', function(msg){
+      }, function(msg){
+        console.log("Error: "+msg);
+      });
+    }
+
   });
 })
 
@@ -57,6 +89,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         'tab-motion': {
           templateUrl: 'templates/tab-motion.html',
           controller: 'MotionCtrl'
+        }
+      }
+    })
+
+    .state('tab.grabado', {
+      url: '/grabado',
+      cache: false,
+      views: {
+        'tab-grabado': {
+          templateUrl: 'templates/tab-grabado.html',
+          controller: 'GrabadoCtrl'
         }
       }
     })
