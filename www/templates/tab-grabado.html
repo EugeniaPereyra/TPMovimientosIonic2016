@@ -1,10 +1,10 @@
 <ion-view view-title="Grabado" class="fondo-grabado">
   <ion-content>
+  <center>
     <br>
     <h4 style="color:black; text-align:center">Historial de movimientos</h4>
     <h4 style="color:black; text-align:center">-------------------------------</h4>
     <div ng-repeat="usuario in archivo">
-    	<center>
     		<p style="color:black"><strong>Usuario:</strong> {{usuario.nombre}}</p>
     		<p style="color:black"><strong>Movimientos:</strong></p>
     		<div ng-repeat="movimiento in usuario.movimientos track by $index">

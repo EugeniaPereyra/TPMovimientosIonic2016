@@ -27,7 +27,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         console.log("Error: "+msg);
       });
 
-      window.plugins.NativeAudio.preloadSimple('acostado', 'audio/acostado.mp3', function(msg){
+      window.plugins.NativeAudio.preloadSimple('acostadoArriba', 'audio/acostadoArriba.mp3', function(msg){
+      }, function(msg){
+        console.log("Error: "+msg);
+      });
+
+      window.plugins.NativeAudio.preloadSimple('acostadoAbajo', 'audio/acostadoAbajo.mp3', function(msg){
       }, function(msg){
         console.log("Error: "+msg);
       });

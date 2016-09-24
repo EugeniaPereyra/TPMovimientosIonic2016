@@ -27,8 +27,10 @@ angular.module('starter.controllers', [])
   $scope.derecha=false;
   $scope.arriba=false;
   $scope.abajo=false;
-  $scope.acostado=false;
+  $scope.acostadoArriba=false;
   $scope.parado=false;
+  $scope.acostadoAbajo=false;
+
 
   $scope.sensibilidad=1;
   
@@ -45,9 +47,9 @@ angular.module('starter.controllers', [])
           console.log(error);
         });
 
-    $scope.watch = $cordovaDeviceMotion.watchAcceleration(options);
+    var watch = $cordovaDeviceMotion.watchAcceleration(options);
     
-    $scope.watch.then(
+    watch.then(
       null,
       function(error) {
         // An error occurred
@@ -79,7 +81,8 @@ angular.module('starter.controllers', [])
         $scope.derecha=false;
         $scope.arriba=false;
         $scope.abajo=false;
-        $scope.acostado=false;
+        $scope.acostadoArriba=false;
+        $scope.acostadoAbajo=false;
         $scope.parado=false;
         if($scope.movimientos)
         {
@@ -99,7 +102,8 @@ angular.module('starter.controllers', [])
         $scope.derecha=true;
         $scope.arriba=false;
         $scope.abajo=false;
-        $scope.acostado=false;
+        $scope.acostadoArriba=false;
+        $scope.acostadoAbajo=false;
         $scope.parado=false;
         if($scope.movimientos)
         {
@@ -119,7 +123,8 @@ angular.module('starter.controllers', [])
         $scope.derecha=false;
         $scope.arriba=false;
         $scope.abajo=true;
-        $scope.acostado=false;
+        $scope.acostadoArriba=false;
+        $scope.acostadoAbajo=false;
         $scope.parado=false;
         if($scope.movimientos)
         {
@@ -139,7 +144,8 @@ angular.module('starter.controllers', [])
         $scope.derecha=false;
         $scope.arriba=true;
         $scope.abajo=false;
-        $scope.acostado=false;
+        $scope.acostadoArriba=false;
+        $scope.acostadoAbajo=false;
         $scope.parado=false;
         if($scope.movimientos)
         {
@@ -151,36 +157,38 @@ angular.module('starter.controllers', [])
     if (SensorZ == 10 && SensorX == 0 && SensorY == 0)
     {
       //mira hacia arriba
-      if(!$scope.acostado)
+      if(!$scope.acostadoArriba)
       {
-        Reproducir('acostado');
+        Reproducir('acostadoArriba');
         $scope.izquierda=false;
         $scope.derecha=false;
         $scope.arriba=false;
         $scope.abajo=false;
-        $scope.acostado=true;
+        $scope.acostadoArriba=true;
+        $scope.acostadoAbajo=false;
         $scope.parado=false;
         if($scope.movimientos)
         {
-          $scope.movimientos.push('acostado');
+          $scope.movimientos.push('acostadoArriba');
         }
       }
     }
     if (SensorZ == -10 && SensorX == 0 && SensorY == 0)
     {
       //mira hacia abajo
-      if(!$scope.acostado)
+      if(!$scope.acostadoAbajo)
       {
-        Reproducir('acostado');
+        Reproducir('acostadoAbajo');
         $scope.izquierda=false;
         $scope.derecha=false;
         $scope.arriba=false;
         $scope.abajo=false;
-        $scope.acostado=true;
+        $scope.acostadoArriba=false;
+        $scope.acostadoAbajo=true;
         $scope.parado=false;
         if($scope.movimientos)
         {
-          $scope.movimientos.push('acostado');
+          $scope.movimientos.push('acostadoAbajo');
         }
       }
     }
@@ -194,7 +202,8 @@ angular.module('starter.controllers', [])
         $scope.derecha=false;
         $scope.arriba=false;
         $scope.abajo=false;
-        $scope.acostado=false;
+        $scope.acostadoArriba=false;
+        $scope.acostadoAbajo=false;
         $scope.parado=true;
         if($scope.movimientos)
         {
@@ -246,42 +255,44 @@ angular.module('starter.controllers', [])
     archivo.nombre=$scope.usuario.nombre;
     archivo.movimientos=$scope.movimientos;
 
-    var confirmPopup = $ionicPopup.confirm({
-        title: 'Guardar',
-        template: '¿Desea guardar en archivo?',
-        cssClass:'salida',
-        okType: 'button-assertive',
-      });
+    if($scope.movimientos!=null && $scope.movimientos.length!=0)
+    {
+      var confirmPopup = $ionicPopup.confirm({
+          title: 'Guardar',
+          template: '¿Desea guardar en archivo?',
+          cssClass:'salida',
+          okType: 'button-assertive',
+        });
 
-      $scope.grabados.push(archivo);
-      var dato=JSON.stringify($scope.grabados);
+        $scope.grabados.push(archivo);
+        var dato=JSON.stringify($scope.grabados);
 
-      confirmPopup.then(function(res) {
-        if(res) {
-          try{            
-              $cordovaFile.writeFile(cordova.file.externalRootDirectory, "motion.txt", dato, true)
-                .then(function (success) {
-                  // success
-                  console.log("archivo guardado");
-                }, function (error) {
-                  // error
-                  console.log(error);
-                });
+        confirmPopup.then(function(res) {
+          if(res) {
+            try{            
+                $cordovaFile.writeFile(cordova.file.externalRootDirectory, "motion.txt", dato, true)
+                  .then(function (success) {
+                    // success
+                    console.log("archivo guardado");
+                  }, function (error) {
+                    // error
+                    console.log(error);
+                  });
+            }
+            catch(e)
+            {
+              console.log("El plugin File funciona en dispositivos unicamente");
+            }
           }
-          catch(e)
-          {
-            console.log("El plugin File funciona en dispositivos unicamente");
-          }
-        }
-      });
-
+        });
+      }
+      
       $scope.copia=$scope.movimientos;
       $scope.movimientos=null;
   }
 
   $scope.Escuchar=function(){
     var retraso=0;
-    $scope.watch.clearWatch();
 
     angular.forEach($scope.copia, function(value, index) {
           try
@@ -293,12 +304,9 @@ angular.module('starter.controllers', [])
             console.log("La vibracion y el sonido, solo funcionan en celulares");
           }
 
-            retraso+=1000;
+            retraso+=1500;
         });  
-    
-    $scope.watch = $cordovaDeviceMotion.watchAcceleration(options);
   }
-
 })
 
 .controller('GrabadoCtrl', function($scope, $cordovaFile) {
