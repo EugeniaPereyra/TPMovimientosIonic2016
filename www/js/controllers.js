@@ -264,12 +264,11 @@ angular.module('starter.controllers', [])
           okType: 'button-assertive',
         });
 
-        $scope.grabados.push(archivo);
-        var dato=JSON.stringify($scope.grabados);
-
         confirmPopup.then(function(res) {
           if(res) {
-            try{            
+            try{  
+                $scope.grabados.push(archivo);
+                var dato=JSON.stringify($scope.grabados);          
                 $cordovaFile.writeFile(cordova.file.externalRootDirectory, "motion.txt", dato, true)
                   .then(function (success) {
                     // success
